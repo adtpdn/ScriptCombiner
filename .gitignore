@@ -19,3 +19,6 @@ compile_commands.json
 # IDE settings
 .vscode/
 .vs/
+
+# Ignore Release
+_Build
