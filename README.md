@@ -1,103 +1,106 @@
-# ScriptCombiner (Native)
+# ScriptCombiner
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey)
-![Language](https://img.shields.io/badge/language-C%2B%2B17-00599C)
+**ScriptCombiner** is a high-performance, native desktop application designed to prepare your coding projects for AI Large Language Models (LLMs) like Claude, ChatGPT, and Gemini.
 
-**ScriptCombiner** is a lightweight, native desktop application designed to prepare your codebases for AI prompting (ChatGPT, Claude, Gemini). 
-
-It scans a project directory, filters files based on your preferences, and generates a single text file containing the project structure and the content of all selected source files.
+It scans your project directory, filters files based on your specifications, and generates a single text file containing your project's directory structure and source code.
 
 ## ✨ Features
 
-* **🚀 Native Performance:** Built with C++ and wxWidgets for a small footprint and fast execution.
-* **🌲 Context-Aware Tree:** Generates a visual ASCII directory tree at the top of the output.
-* **⚙️ Presets:** One-click configuration for **Godot**, **Unity**, and **Node.js** projects.
-* **👀 Smart Filtering:** * Toggle specific file extensions (.cpp, .py, .js, .cs, etc.).
-    * Respects `.gitignore` patterns.
-    * Right-click context menu to quickly ignore files or extensions.
-* **📝 Syntax Highlighting:** Preview files with syntax coloring before combining.
-* **🔒 Privacy:** Runs entirely offline on your machine.
+* **⚡ Native Performance:** Built with C++17 and wxWidgets for a minimal footprint.
+* **🌲 Context-Aware Tree:** Generates a visual ASCII directory tree at the top of the output for AI context.
+* **⚙️ Smart Presets:** One-click configuration for **Godot**, **Unity**, and **Node.js** projects.
+* **👀 Syntax Highlighting:** integrated code editor to preview files before combining.
+* **🛡️ Smart Filtering:**
+    * Toggle specific file extensions (e.g., `.cpp`, `.py`, `.gd`, `.cs`, `.ts`).
+    * Respects `.gitignore` patterns and allows custom ignore rules.
+    * **Right-click** context menu to ignore files or extensions instantly.
+* **💻 Cross-Platform:** Compile natively for Windows (x64/ARM), macOS (Intel/Apple Silicon), and Linux.
 
-## 📦 Compilation Guide
+## 🚀 How to Use
+
+1.  **Load Project:** Click **"Load Project Folder"** or use `Ctrl+O`.
+2.  **Select Preset:** Choose a preset (Godot, Unity, Node) in the settings pane to automatically configure filters and ignore patterns.
+3.  **Refine:**
+    * Use the checkboxes to toggle file types.
+    * Add custom ignore patterns (one per line) in the settings text area.
+    * Right-click items in the tree to ignore them.
+4.  **Preview:** Click any file in the tree to inspect its content.
+5.  **Export:** Click **"Save Combined File"** (`Ctrl+S`) to generate the context file.
+
+## 🛠️ Build Instructions
 
 ### Prerequisites
+* **CMake** (3.10+)
 * **C++ Compiler** (GCC, Clang, or MSVC)
-* **CMake** (3.10 or higher)
-* **wxWidgets** (3.2 or higher)
+* **wxWidgets** (3.2+)
 
-### 🍎 macOS
+### 🍎 macOS (Universal Binary - M1/M2 & Intel)
 
-1.  **Install Dependencies** (using Homebrew):
-    ```bash
-    brew install cmake wxwidgets
-    ```
+This build command creates a single app that runs natively on both Apple Silicon and Intel Macs.
 
-2.  **Build:**
-    ```bash
-    mkdir build && cd build
-    cmake ..
-    make
-    ```
+```bash
+# 1. Install dependencies
+brew install cmake wxwidgets
 
-3.  **Run:**
-    ```bash
-    ./ScriptCombiner
-    ```
+# 2. Build
+mkdir build && cd build
+cmake ..
+make
 
-### 🖥 Windows
+# 3. Run
+open ScriptCombiner.app
 
-1.  **Install wxWidgets:**
-    * *Option A (vcpkg - Recommended):*
-        ```powershell
-        vcpkg install wxwidgets:x64-windows
-        ```
-    * *Option B (Installer):* Download the binaries from [wxWidgets.org](https://www.wxwidgets.org/downloads/) and set your `wxWidgets_ROOT` environment variable.
+### 🖥 Windows (x64 & ARM64)
 
-2.  **Build (using PowerShell or Command Prompt):**
-    ```powershell
-    mkdir build
-    cd build
-    cmake .. -DCMAKE_TOOLCHAIN_FILE=[path/to/vcpkg]/scripts/buildsystems/vcpkg.cmake
-    cmake --build . --config Release
-    ```
+**x64 (Standard):**
 
-3.  **Run:**
-    Find the executable in `build/Release/ScriptCombiner.exe`.
+```powershell
+mkdir build; cd build
+cmake .. -A x64
+cmake --build . --config Release
+```
 
----
+**ARM64 (Surface Pro X / Snapdragon):**
 
-## 📖 How to Use
+```powershell
+mkdir build; cd build
+cmake .. -A ARM64
+cmake --build . --config Release
+```
 
-1.  **Load Project:** Click **"Load Project Folder"** (or `Ctrl+O`) and select the root directory of your code.
-2.  **Select Preset (Optional):** Open "Project Settings" on the left and click a preset (e.g., Godot) to automatically check relevant file types and ignore standard junk folders.
-3.  **Refine Selection:**
-    * Use the **"File Type Filters"** accordion to toggle specific extensions.
-    * **Right-click** any file in the tree view to "Ignore this file" or "Ignore all *.ext".
-    * Edit ignore patterns manually in the text area.
-4.  **Review:** Click on files in the tree to preview their content in the right panel.
-5.  **Export:** Click **"Save Combined File"**.
-6.  **Prompt:** Upload the generated text file to your favorite AI model with the prompt: *"Here is my project structure and code. [Insert your question]..."*
+### 🐧 Linux (x64 & ARM)
 
----
+This works for standard desktops (x64) and devices like Raspberry Pi (ARM).
 
-## 🛠️ Extending the Features
+```bash
+# 1. Install dependencies (Ubuntu/Debian)
+sudo apt-get install build-essential cmake libwxgtk3.0-gtk3-dev
 
-Want to add support for Rust, Go, or Ruby?
+# 2. Build
+mkdir build && cd build
+cmake ..
+make
 
-1.  **Add UI Checkbox:**
-    In `src/MainFrame.h`, add a `wxCheckBox* m_filterRust;` member.
-    In `src/MainFrame.cpp` (`CreateLeftPanel`), initialize the checkbox and add it to the sizer.
+# 3. Run
+./ScriptCombiner
+```
 
-2.  **Update Filter Logic:**
-    In `src/MainFrame.cpp` (`IsFileTypeFiltered`), add:
+## 🔌 Extending the Project
+
+To add support for a new language (e.g., **Rust**):
+
+1.  **Add UI:** In `src/MainFrame.cpp` (`CreateLeftPanel`), add a new `wxCheckBox` for `.rs` files.
+2.  **Add Logic:** In `src/MainFrame.cpp` (`IsFileTypeFiltered`), add:
     ```cpp
     if (m_filterRust->IsChecked() && ext == "rs") return true;
     ```
-
-3.  **Add Syntax Highlighting:**
-    In `src/MainFrame.cpp` (`SetEditorLexer`), add a case for the extension to set the correct `wxSTC_LEX_*` constant.
+3.  **Add Syntax Highlighting:** In `src/MainFrame.cpp` (`SetEditorLexer`), map the extension:
+    ```cpp
+    } else if (ext == "rs") {
+        m_stc->SetLexer(wxSTC_LEX_CPP); // Rust tokens are similar to C++
+    }
+    ```
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT License
