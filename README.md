@@ -1,5 +1,9 @@
 # ScriptCombiner
 
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey)
+![Language](https://img.shields.io/badge/language-C%2B%2B17-00599C)
+
 **ScriptCombiner** is a high-performance, native desktop application designed to prepare your coding projects for AI Large Language Models (LLMs) like Claude, ChatGPT, and Gemini.
 
 It scans your project directory, filters files based on your specifications, and generates a single text file containing your project's directory structure and source code.
@@ -49,6 +53,8 @@ make
 
 # 3. Run
 open ScriptCombiner.app
+
+```
 
 ### 🖥 Windows (x64 & ARM64)
 
